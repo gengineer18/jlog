@@ -10,11 +10,13 @@
   "dependencies": {
     "@apollo/client": "^3.2.1",
     "@apollo/react-hooks": "^4.0.0",
+    "firebase": "^7.21.1",
     "graphql": "^15.3.0",
     "minireset.css": "^0.0.6",
     "next": "9.5.3",
     "react": "16.13.1",
-    "react-dom": "16.13.1"
+    "react-dom": "16.13.1",
+    "react-firebase-hooks": "^2.2.0"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^1.17.8",
