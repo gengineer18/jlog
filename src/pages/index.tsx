@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react'
 import { NextPage } from 'next'
+import { List, Avatar } from 'antd'
 
 import firebase from 'firebase/app'
 import 'firebase/auth'
@@ -55,9 +56,23 @@ function ChatRoom() {
   return (
     <>
       <main>
-        {messages &&
-          messages.map((msg, i) => <ChatMessages key={i} message={msg} />)}
+        {messages && (
+          <List
+            itemLayout="horizontal"
+            dataSource={messages}
+            renderItem={(item: any) => (
+              <List.Item>
+                <List.Item.Meta
+                  avatar={<Avatar src={item.photoURL} />}
+                  title={<span>{item.text}</span>}
+                  description={item.uid}
+                />
+              </List.Item>
+            )}
+          />
+        )}
         <div ref={ref}></div>
+        <SignOut />
       </main>
       <form onSubmit={sendMessage}>
         <input
@@ -66,15 +81,6 @@ function ChatRoom() {
         />
         <button type="submit">submit</button>
       </form>
-    </>
-  )
-}
-
-function ChatMessages(props: any) {
-  const { text, uid, photoURL } = props.message
-  return (
-    <>
-      <p>{text}</p>
     </>
   )
 }
