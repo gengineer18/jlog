@@ -15,6 +15,7 @@
   },
   "env": { "browser": true, "node": true, "es6": true },
   "rules": {
+    "no-use-before-define": "off",
     "@typescript-eslint/no-unused-vars": [1, { "argsIgnorePattern": "res|next|stage|^err|on|config|e|_" }],
     "arrow-body-style": [2, "as-needed"],
     "no-unused-expressions": [1, { "allowTaggedTemplates": true }],
@@ -36,7 +37,8 @@
     "import/prefer-default-export": 0,
     "semi": [2, "never"],
     "react/jsx-wrap-multilines": 0,
-    "@typescript-eslint/ban-types": 0
+    "@typescript-eslint/ban-types": 0,
+    "@typescript-eslint/no-empty-function": 0
   },
   "settings": {
     "react": {

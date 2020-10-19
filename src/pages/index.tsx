@@ -1,11 +1,11 @@
 import React, { useState, useRef } from 'react'
 import { NextPage } from 'next'
+import Link from 'next/link'
 import { List, Avatar } from 'antd'
 
 import firebase from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/firestore'
-import { useAuthState } from 'react-firebase-hooks/auth'
 import { useCollectionData } from 'react-firebase-hooks/firestore'
 import firebaseConfig from '../../config/firebase.json'
 
@@ -21,22 +21,30 @@ function SignIn() {
     const provider = new firebase.auth.GoogleAuthProvider()
     auth.signInWithPopup(provider)
   }
-  return <button onClick={signInWithGoogle}>signin</button>
+  return (
+    <button onClick={signInWithGoogle} type='button'>
+      signin
+    </button>
+  )
 }
 
 function SignOut() {
   return (
-    auth.currentUser && <button onClick={() => auth.signOut()}>sign out</button>
+    auth.currentUser && (
+      <button onClick={() => auth.signOut()} type='button'>
+        sign out
+      </button>
+    )
   )
 }
 
 function ChatRoom() {
-  const messagesRef = firestore.collection('messages')
-  const query = messagesRef.orderBy('createdAt', 'desc').limit(5)
+  const messagesRef = firestore.collection(`messages`)
+  const query = messagesRef.orderBy(`createdAt`, `desc`).limit(5)
   const ref = useRef<HTMLDivElement>(null)
 
-  const [messages] = useCollectionData(query, { idField: 'id' })
-  const [formValue, setFormValue] = useState('')
+  const [messages] = useCollectionData(query, { idField: `id` })
+  const [formValue, setFormValue] = useState(``)
 
   const sendMessage = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -49,8 +57,8 @@ function ChatRoom() {
       photoURL,
     })
 
-    setFormValue('')
-    ref && ref.current && ref.current.scrollIntoView({ behavior: 'smooth' })
+    setFormValue(``)
+    ref && ref.current && ref.current.scrollIntoView({ behavior: `smooth` })
   }
 
   return (
@@ -58,7 +66,7 @@ function ChatRoom() {
       <main>
         {messages && (
           <List
-            itemLayout="horizontal"
+            itemLayout='horizontal'
             dataSource={messages}
             renderItem={(item: any) => (
               <List.Item>
@@ -71,23 +79,23 @@ function ChatRoom() {
             )}
           />
         )}
-        <div ref={ref}></div>
+        <div ref={ref} />
         <SignOut />
       </main>
       <form onSubmit={sendMessage}>
-        <input
-          value={formValue}
-          onChange={(e) => setFormValue(e.target.value)}
-        />
-        <button type="submit">submit</button>
+        <input value={formValue} onChange={(e) => setFormValue(e.target.value)} />
+        <button type='submit'>submit</button>
       </form>
     </>
   )
 }
 
-const Index: NextPage = () => {
-  const [user] = useAuthState(auth)
-  return <div>{user ? <ChatRoom /> : <SignIn />}</div>
-}
+const Index: NextPage = () => (
+  <div>
+    <Link href='/game/test'>
+      <a>game</a>
+    </Link>
+  </div>
+)
 
 export default Index
