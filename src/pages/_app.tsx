@@ -2,17 +2,10 @@ import React from 'react'
 import { AppProps } from 'next/app'
 import Head from 'next/head'
 import { ApolloProvider, ApolloClient, InMemoryCache, HttpLink } from '@apollo/client'
-// import { ApolloProvider } from '@apollo/react-hooks'
-import { Layout } from 'antd'
-import { css } from '@emotion/core'
 import { ThemeProvider } from 'emotion-theming'
-import { Header } from '@/components/common/layout/Header'
-import { Footer } from '@/components/common/layout/Footer'
 import { WindowSizeProvider } from '@/components/common/context/WindowSize'
 import 'minireset.css'
 import 'antd/dist/antd.css'
-
-const { Content } = Layout
 
 const theme = {
   colors: {
@@ -20,21 +13,6 @@ const theme = {
     secondary: `blue`,
   },
 }
-
-const wrapper = css({
-  minHeight: `calc(100vh - 70px)`,
-})
-
-const layout = css({
-  minHeight: `calc(100vh - 70px)`,
-  maxWidth: `960px`,
-  margin: `0 auto`,
-  padding: `20px 12px`,
-})
-
-// const footer = css({
-//   height: `50px`,
-// })
 
 const createApolloClient = () =>
   new ApolloClient({
@@ -56,12 +34,7 @@ const MyApp = ({ Component, pageProps }: AppProps): JSX.Element => {
       <ApolloProvider client={client}>
         <ThemeProvider theme={theme}>
           <WindowSizeProvider>
-            <div css={wrapper}>
-              <Header />
-              <Content css={layout}>
-                <Component {...pageProps} />
-              </Content>
-            </div>
+            <Component {...pageProps} />
           </WindowSizeProvider>
         </ThemeProvider>
       </ApolloProvider>

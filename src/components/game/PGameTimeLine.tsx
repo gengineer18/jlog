@@ -27,7 +27,7 @@ export const PGameTimeLine: React.FCX<Props> = (props) => {
           dataSource={messages}
           renderItem={(item: TMessages) => {
             const date = item.createdAt ? dayjs.unix(item.createdAt?.seconds) : ``
-            const formattedDate = date ? date.format(`YYYY/MM/DD hh:mm`) : ``
+            const formattedDate = date ? date.format(`YYYY/MM/DD HH:mm`) : ``
             return (
               <List.Item
                 actions={[

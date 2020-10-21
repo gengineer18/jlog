@@ -3,7 +3,7 @@ import { auth } from '@/utils/firebase'
 
 export const signInWithGoogle = (): void => {
   const provider = new firebase.auth.GoogleAuthProvider()
-  auth.signInWithRedirect(provider)
+  auth.signInWithPopup(provider)
 }
 
 export const signOut = (): void => {
