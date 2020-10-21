@@ -1,11 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { AppProps } from 'next/app'
 import Head from 'next/head'
-import { ApolloProvider, ApolloClient, InMemoryCache, HttpLink } from '@apollo/client'
+import { ApolloProvider, ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client'
+import { setContext } from '@apollo/client/link/context'
 import { ThemeProvider } from 'emotion-theming'
 import { WindowSizeProvider } from '@/components/common/context/WindowSize'
 import 'minireset.css'
 import 'antd/dist/antd.css'
+import { auth } from '@/utils/firebase'
 
 const theme = {
   colors: {
@@ -14,15 +16,37 @@ const theme = {
   },
 }
 
-const createApolloClient = () =>
-  new ApolloClient({
-    link: new HttpLink({
-      uri: `http://localhost:8080/v1/graphql`,
-    }),
-    cache: new InMemoryCache(),
+const MyApp = ({ Component, pageProps }: AppProps): JSX.Element => {
+  const [idToken, setIdToken] = useState<string>(``)
+
+  auth?.onAuthStateChanged((user) => {
+    if (user) {
+      user.getIdToken().then((token) => {
+        setIdToken(token)
+      })
+    }
   })
 
-const MyApp = ({ Component, pageProps }: AppProps): JSX.Element => {
+  const httpLink = createHttpLink({
+    uri: `https://measured-fowl-83.hasura.app/v1/graphql`,
+    // uri: `http://localhost:8080/v1/graphql`,
+  })
+
+  const authLink = setContext((_, { headers }) => {
+    const token = idToken
+    return {
+      headers: {
+        ...headers,
+        authorization: token ? `Bearer ${token}` : ``,
+      },
+    }
+  })
+
+  const createApolloClient = () =>
+    new ApolloClient({
+      link: authLink.concat(httpLink),
+      cache: new InMemoryCache(),
+    })
   const client = createApolloClient()
 
   return (

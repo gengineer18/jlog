@@ -1,1 +1,11 @@
-[]
+- table:
+    schema: public
+    name: user
+  configuration:
+    custom_root_fields: {}
+    custom_column_names:
+      display_name: displayName
+      display_id: displayId
+      photo_url: photoUrl
+      updated_at: updatedAt
+      created_at: createdAt

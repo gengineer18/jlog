@@ -1,0 +1,12 @@
+query getUserById($uid: String!) {
+  user_by_pk(uid: $uid) {
+    id
+    uid
+    displayId
+    displayName
+    email
+    photoUrl
+    createdAt
+    updatedAt
+  }
+}
