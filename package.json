@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint --ext .js,.jsx,.ts,.tsx --ignore-path .eslintignore ."
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx --ignore-path .eslintignore .",
+    "hasura:console": "yarn hasura console --project hasura"
   },
   "dependencies": {
     "@ant-design/icons": "^4.2.2",

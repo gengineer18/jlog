@@ -1,5 +1,86 @@
 - table:
     schema: public
+    name: club
+  configuration:
+    custom_root_fields: {}
+    custom_column_names:
+      name_en: nameEn
+      color_1: color1
+      updated_at: updatedAt
+      emblem_url: emblemUrl
+      created_at: createdAt
+      color_2: color2
+      color_3: color3
+      home_stadium_id: homeStadiumId
+  object_relationships:
+  - name: stadium
+    using:
+      foreign_key_constraint_on: home_stadium_id
+- table:
+    schema: public
+    name: competition
+  configuration:
+    custom_root_fields: {}
+    custom_column_names:
+      name_en: nameEn
+      updated_at: updatedAt
+      created_at: createdAt
+  array_relationships:
+  - name: games
+    using:
+      foreign_key_constraint_on:
+        column: competition_id
+        table:
+          schema: public
+          name: game
+- table:
+    schema: public
+    name: game
+  configuration:
+    custom_root_fields: {}
+    custom_column_names:
+      competition_id: competitionId
+      home_score: homeScore
+      date_unix: dateUnix
+      away_id: awayId
+      updated_at: updatedAt
+      created_at: createdAt
+      home_id: homeId
+      stadium_id: stadiumId
+      away_score: awayScore
+  object_relationships:
+  - name: competition
+    using:
+      foreign_key_constraint_on: competition_id
+  - name: stadium
+    using:
+      foreign_key_constraint_on: stadium_id
+- table:
+    schema: public
+    name: stadium
+  configuration:
+    custom_root_fields: {}
+    custom_column_names:
+      updated_at: updatedAt
+      short_name: shortName
+      created_at: createdAt
+  array_relationships:
+  - name: clubs
+    using:
+      foreign_key_constraint_on:
+        column: home_stadium_id
+        table:
+          schema: public
+          name: club
+  - name: games
+    using:
+      foreign_key_constraint_on:
+        column: stadium_id
+        table:
+          schema: public
+          name: game
+- table:
+    schema: public
     name: user
   configuration:
     custom_root_fields: {}
